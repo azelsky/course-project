@@ -1,0 +1,16 @@
+<div class="header">
+    {{selectedSection}}
+</div>
+
+<div class="calculations-wrapper">
+  <div class="side-bar">
+    <ul class="menu">
+      <li class="menu__item" routerLinkActive="active"><a routerLink="weight-plunger">Сalculation of Weight of the lift plunger</a></li>
+      <li class="menu__item" routerLinkActive="active"><a routerLink="pump-compressor-pipe">Сalculation of Pump-Compressor Pipe</a></li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
