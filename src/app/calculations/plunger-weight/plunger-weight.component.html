@@ -1,3 +1,22 @@
-<p>
-  plunger-weight works!
-</p>
+<div class="wrapper">
+  <div class="flex">
+    <div class="flex-item">
+      <div style="display: block;">
+        <canvas
+          width="400"
+          height="400"
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="service.lineChartOptions"
+          [colors]="service.lineChartColors"
+          [legend]="service.lineChartLegend"
+          [chartType]="service.lineChartType"
+          [plugins]="service.lineChartPlugins"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"
+          baseChart
+        ></canvas>
+      </div>
+    </div>
+</div>
+
