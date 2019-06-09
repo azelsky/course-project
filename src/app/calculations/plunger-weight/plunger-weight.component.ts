@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseChartDirective, Label } from 'ng2-charts';
 import {PlungerWeightService} from '../../shared/services/plunger-weight.service';
+import {ChartOptions} from 'chart.js';
 
 @Component({
   selector: 'app-plunger-weight',
@@ -9,10 +10,45 @@ import {PlungerWeightService} from '../../shared/services/plunger-weight.service
 })
 export class PlungerWeightComponent implements OnInit {
 
-  public lineChartData = [
-    { data: [], label: 'Series A' },
-  ];
-  public lineChartLabels: Label[] = ['6', '5', '3.75', '3.16', '3', '2.31', '2', '0.75'] .reverse();
+  public lineChartData = { data: [], label: 'Series A' };
+  public lineChartLabels: Label[] = [].reverse();
+  public lineChartOptions: (ChartOptions & { annotation: any }) = {
+    responsive: true,
+    scales: {
+      // We use this empty structure as a placeholder for dynamic theming.
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'м/с'
+        }
+      }],
+      yAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: 'кг'
+          }
+        }
+      ]
+    },
+    annotation: {
+      annotations: [
+        {
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: 'March',
+          borderColor: 'orange',
+          borderWidth: 2,
+          label: {
+            enabled: true,
+            fontColor: 'orange',
+            content: 'LineAnno'
+          }
+        },
+      ],
+    },
+  };
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
@@ -25,27 +61,32 @@ export class PlungerWeightComponent implements OnInit {
   }
 
   weightCalculation(): void {
-    const v = [6, 5, 3.75, 3.16, 3, 2.31, 2, 0.75];
-    let res = 0;
-    const d = 300;
-    const D = 310;
-    const g = 9.8;
-    const B = [0.245, 0.247, 0.251, 0.258, 0.262, 0.266, 0.27, 0.277];
-    const Q = [2.367, 2.22, 1.985, 1.787, 1.6, 1.416, 1.244, 0.909];
-    const pressure = 0.1013;
-    const coefficientOfHydraulicResistance = 0.012;
-    for (let i = 0; i < 8; i++) {
-      res = (Math.PI / 8) *
-        (
-          Math.pow(d, 2) * Math.pow(D, 2) / Math.pow(
-            ((Math.pow(D, 2) - (Math.pow(d, 2))))
-            , 2)
-        ) *
-        (coefficientOfHydraulicResistance * pressure / g * Math.pow(B[i], 2)) *
-        Math.pow(
-          (4 * Math.pow(B[i], 2) * Q[i] / Math.PI * Math.pow(D, 2)) - v[i]
-          , 2);
-      this.lineChartData[0].data.push(res);
+    const V1 = 0.1;
+    const V2 = 6;
+    const step = 0.7;
+    const di = 0.132;
+    const D = 0.310;
+    const pi = Math.PI;
+    let K1 = V1;
+    while (K1 < V2) {
+      const N1 = pi / 8;
+      const N2 = Math.pow(D, 2);
+      const N3 = Math.pow(di, 2);
+      const B = 0.245;
+      const p = 980;
+      const D1 = N2 * N3 * N2;
+      const D2 = N2 - N3;
+      const Dem = D1 / Math.pow(D2, 2);
+      const N6 = Math.pow(B, 2);
+      const g = 9.8;
+      const z = 0.68;
+      const Q = 2.367;
+      const Q1 = (p * z) / (g * N6);
+      const W = (4 * N6 * Q) / (pi * D * D);
+      const m = N1 * Dem * Q1 * (W - K1) * (W - K1);
+      this.lineChartLabels.push(K1.toFixed(2).toString());
+      this.lineChartData.data.push(m.toFixed(2));
+      K1 += step;
     }
   }
 

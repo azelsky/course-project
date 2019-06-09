@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Label} from 'ng2-charts';
 import {PlungerWeightService} from '../../shared/services/plunger-weight.service';
+import {ChartOptions} from 'chart.js';
 
 @Component({
   selector: 'app-pump-compressor-pipe',
@@ -15,6 +16,43 @@ export class PumpCompressorPipeComponent implements OnInit {
   public pressureEnd =  20;
   public De = 128;
   public pipeThickness = 10;
+  public lineChartOptions: (ChartOptions & { annotation: any }) = {
+    responsive: true,
+    scales: {
+      // We use this empty structure as a placeholder for dynamic theming.
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'probability'
+        }
+      }],
+      yAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: 'probability'
+          }
+        }
+      ]
+    },
+    annotation: {
+      annotations: [
+        {
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: 'March',
+          borderColor: 'orange',
+          borderWidth: 2,
+          label: {
+            enabled: true,
+            fontColor: 'orange',
+            content: 'LineAnno'
+          }
+        },
+      ],
+    },
+  };
 
   constructor(
     private service: PlungerWeightService
@@ -34,6 +72,11 @@ export class PumpCompressorPipeComponent implements OnInit {
     return De - 2 * pipeThickness;
   }
 
+  resetChart(): void {
+    this.lineChartData.data = [];
+    this.lineChartLabels = [];
+  }
+
   equivalentStretch(pressure: number): number {
     const Di = this.setDi();
     const De = this.transformToMeter(this.De);
@@ -46,10 +89,10 @@ export class PumpCompressorPipeComponent implements OnInit {
   }
 
   strengthPipeCalculation(): void {
+    this.resetChart();
     for (let pressure = this.pressureStart; pressure <= this.pressureEnd; pressure++) {
       this.lineChartData.data.push(pressure);
       const equivalentStretch = this.equivalentStretch(pressure);
-      debugger;
       const safetyStretch = this.safetyStretch(equivalentStretch).toFixed(2).toString();
       this.lineChartLabels.push(safetyStretch);
     }

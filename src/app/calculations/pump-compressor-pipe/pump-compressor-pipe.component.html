@@ -1,21 +1,85 @@
 <div class="wrapper">
-  <div class="flex">
-    <div class="flex-item">
-      <div style="display: block;">
-        <canvas
-          width="400"
-          height="400"
-          [datasets]="[lineChartData]"
-          [labels]="lineChartLabels"
-          [options]="service.lineChartOptions"
-          [colors]="service.lineChartColors"
-          [legend]="service.lineChartLegend"
-          [chartType]="service.lineChartType"
-          [plugins]="service.lineChartPlugins"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)"
-          baseChart
-        ></canvas>
-      </div>
+  <div class="input-data-block">
+    <h1>
+      Input data
+      <mat-icon
+        style="cursor:pointer;"
+        matTooltip="The main goal of this section is to calculate permissible stress for tubing PCP"
+      >info</mat-icon>
+    </h1>
+
+    <div class="input">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Start Pressure"
+          type="number"
+          [(ngModel)]="pressureStart"
+          [min]="1"
+          matTooltip="Input the minimum pressure in MPa"
+        >
+      </mat-form-field>
+      <span class="units">MPa</span>
+    </div>
+    <div class="input">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="End Pressure"
+          type="number"
+          [(ngModel)]="pressureEnd"
+          [min]="1"
+          matTooltip="Input the maximum pressure in MPa"
+        >
+      </mat-form-field>
+      <span class="units">MPa</span>
+    </div>
+    <div class="input">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="External Diameter"
+          type="number"
+          [(ngModel)]="De"
+          [min]="1"
+          matTooltip="Input the External Diameter in millimeters"
+        >
+      </mat-form-field>
+      <span class="units">mm</span>
+    </div>
+    <div class="input">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Pipe Thickness"
+          type="number"  in MPa
+          [(ngModel)]="pipeThickness"
+          [min]="1"
+          matTooltip="Input the pipe Thickness in millimeters"
+        >
+      </mat-form-field>
+      <span class="units">mm</span>
+    </div>
+
+    <button mat-button [disabled]="!pressureStart || !pressureEnd || !De || !pipeThickness" (click)="strengthPipeCalculation();">Calculate</button>
+  </div>
+  <div>
+    <div style="display: block;">
+      <canvas
+        width="500"
+        height="500"
+        [datasets]="[lineChartData]"
+        [labels]="lineChartLabels"
+        [options]="lineChartOptions"
+        [colors]="service.lineChartColors"
+        [legend]="service.lineChartLegend"
+        [chartType]="service.lineChartType"
+        [plugins]="service.lineChartPlugins"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)"
+        baseChart
+      ></canvas>
     </div>
   </div>
+
+</div>
