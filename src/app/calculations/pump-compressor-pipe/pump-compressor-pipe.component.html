@@ -1,10 +1,10 @@
 <div class="wrapper">
   <div class="input-data-block">
     <h1>
-      Input data
+      Вхідні дані
       <mat-icon
         style="cursor:pointer;"
-        matTooltip="The main goal of this section is to calculate permissible stress for tubing PCP"
+        matTooltip="Розділ для розрахунку запасу міцності труб НКТ"
       >info</mat-icon>
     </h1>
 
@@ -12,56 +12,56 @@
       <mat-form-field>
         <input
           matInput
-          placeholder="Start Pressure"
+          placeholder="Мінімальний тиск"
           type="number"
           [(ngModel)]="pressureStart"
           [min]="1"
-          matTooltip="Input the minimum pressure in MPa"
+          matTooltip="Введіть мінімальний тиск в МПа"
         >
       </mat-form-field>
-      <span class="units">MPa</span>
+      <span class="units">МПа</span>
     </div>
     <div class="input">
       <mat-form-field>
         <input
           matInput
-          placeholder="End Pressure"
+          placeholder="Максимальний тиск тиск"
           type="number"
           [(ngModel)]="pressureEnd"
           [min]="1"
-          matTooltip="Input the maximum pressure in MPa"
+          matTooltip="Введіть максимальний тиск в МПа"
         >
       </mat-form-field>
-      <span class="units">MPa</span>
+      <span class="units">МПа</span>
     </div>
     <div class="input">
       <mat-form-field>
         <input
           matInput
-          placeholder="External Diameter"
+          placeholder="Зовнішній діаметр"
           type="number"
           [(ngModel)]="De"
           [min]="1"
-          matTooltip="Input the External Diameter in millimeters"
+          matTooltip="Введіть зовнішній діаметр в міліметрах"
         >
       </mat-form-field>
-      <span class="units">mm</span>
+      <span class="units">мм</span>
     </div>
     <div class="input">
       <mat-form-field>
         <input
           matInput
-          placeholder="Pipe Thickness"
+          placeholder="Товщина стінки"
           type="number"  in MPa
           [(ngModel)]="pipeThickness"
           [min]="1"
-          matTooltip="Input the pipe Thickness in millimeters"
+          matTooltip="Введіть товщину стінки труби"
         >
       </mat-form-field>
-      <span class="units">mm</span>
+      <span class="units">мм</span>
     </div>
 
-    <button mat-button [disabled]="!pressureStart || !pressureEnd || !De || !pipeThickness" (click)="strengthPipeCalculation();">Calculate</button>
+    <button mat-button [disabled]="!pressureStart || !pressureEnd || !De || !pipeThickness" (click)="strengthPipeCalculation();">Розрахувати</button>
   </div>
   <div>
     <div style="display: block;">

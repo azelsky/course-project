@@ -1,22 +1,85 @@
 <div class="wrapper">
-  <div class="flex">
-    <div class="flex-item">
-      <div style="display: block;">
-        <canvas
-          width="400"
-          height="400"
-          [datasets]="[lineChartData]"
-          [labels]="lineChartLabels"
-          [options]="lineChartOptions"
-          [colors]="service.lineChartColors"
-          [legend]="service.lineChartLegend"
-          [chartType]="service.lineChartType"
-          [plugins]="service.lineChartPlugins"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)"
-          baseChart
-        ></canvas>
-      </div>
-    </div>
-</div>
+  <div class="input-data-block">
+    <h1>
+      Вхідні дані
+      <mat-icon
+        style="cursor:pointer;"
+        matTooltip="Розділ для розрахунку маси плунжера"
+      >info</mat-icon>
+    </h1>
 
+    <div class="input">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Мінімальну швидкість"
+          type="number"
+          [(ngModel)]="minSpeed"
+          [min]="1"
+          matTooltip="Введіть швидкість в м/с"
+        >
+      </mat-form-field>
+      <span class="units">м/с</span>
+    </div>
+    <div class="input">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Максимальну швидкість"
+          type="number"
+          [(ngModel)]="maxSpeed"
+          [min]="1"
+          matTooltip="Введіть швидкість в м/с"
+        >
+      </mat-form-field>
+      <span class="units">м/с</span>
+    </div>
+    <div class="input">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Діаметр ліфтової колони"
+          type="number"
+          [(ngModel)]="diameter"
+          [min]="1"
+          matTooltip="Введіть діаметр  прохідного січення труб ліфтової колони в міліметрах"
+        >
+      </mat-form-field>
+      <span class="units">мм</span>
+    </div>
+    <div class="input">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="діаметр рухомого об'кта"
+          type="number"  in MPa
+          [(ngModel)]="diameterMovableObject"
+          [min]="1"
+          matTooltip="Введіть діаметр рухомого об'кта в мм"
+        >
+      </mat-form-field>
+      <span class="units">мм</span>
+    </div>
+
+    <button mat-button [disabled]="!minSpeed || !maxSpeed || !diameter || !diameterMovableObject" (click)="weightCalculation();">Розрахувати</button>
+  </div>
+  <div>
+    <div style="display: block;">
+      <canvas
+        width="500"
+        height="500"
+        [datasets]="[lineChartData]"
+        [labels]="lineChartLabels"
+        [options]="lineChartOptions"
+        [colors]="service.lineChartColors"
+        [legend]="service.lineChartLegend"
+        [chartType]="service.lineChartType"
+        [plugins]="service.lineChartPlugins"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)"
+        baseChart
+      ></canvas>
+    </div>
+  </div>
+
+</div>

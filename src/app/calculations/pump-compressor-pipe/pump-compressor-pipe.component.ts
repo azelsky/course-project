@@ -19,18 +19,17 @@ export class PumpCompressorPipeComponent implements OnInit {
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
       xAxes: [{
         scaleLabel: {
           display: true,
-          labelString: 'probability'
+          labelString: 'в.о.'
         }
       }],
       yAxes: [
         {
           scaleLabel: {
             display: true,
-            labelString: 'probability'
+            labelString: 'МПа'
           }
         }
       ]
