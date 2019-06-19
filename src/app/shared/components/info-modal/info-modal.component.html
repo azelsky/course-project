@@ -1,0 +1,12 @@
+<div class="wrapper">
+  <h1 mat-dialog-title>{{data.title}}</h1>
+
+  <div class="content">
+    <img [src]="'../../../../assets/' + data.img" alt="формула">
+    <ul>
+      <li *ngFor="let f of data.formulaData">{{f.name}} - {{f.description}}</li>
+    </ul>
+  </div>
+
+  <button (click)="close()">Закрити</button>
+</div>

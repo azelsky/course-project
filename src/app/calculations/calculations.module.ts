@@ -7,9 +7,11 @@ import { PumpCompressorPipeComponent } from './pump-compressor-pipe/pump-compres
 import {ChartsModule} from 'ng2-charts';
 import {MatFormFieldModule, MatIconModule, MatInputModule, MatTooltipModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
+import {MatDialogModule} from '@angular/material/dialog';
+import {InfoModalComponent} from '../shared/components/info-modal/info-modal.component';
 
 @NgModule({
-  declarations: [CalculationsComponent, PlungerWeightComponent, PumpCompressorPipeComponent],
+  declarations: [CalculationsComponent, PlungerWeightComponent, PumpCompressorPipeComponent, InfoModalComponent],
   imports: [
     CommonModule,
     CalculationsRoutingModule,
@@ -19,7 +21,9 @@ import {FormsModule} from '@angular/forms';
     FormsModule,
     MatTooltipModule,
     MatIconModule,
+    MatDialogModule
   ],
+  entryComponents: [InfoModalComponent],
   exports: [],
 })
 export class CalculationsModule { }

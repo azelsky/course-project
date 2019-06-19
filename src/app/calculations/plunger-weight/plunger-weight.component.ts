@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Label } from 'ng2-charts';
 import {PlungerWeightService} from '../../shared/services/plunger-weight.service';
 import {ChartOptions} from 'chart.js';
+import {MatDialog} from '@angular/material';
+
+import {InfoModalComponent} from '../../shared/components/info-modal/info-modal.component';
 
 @Component({
   selector: 'app-plunger-weight',
@@ -9,11 +12,21 @@ import {ChartOptions} from 'chart.js';
   styleUrls: ['./plunger-weight.component.scss']
 })
 export class PlungerWeightComponent implements OnInit {
-  public minSpeed = 0.1;
-  public maxSpeed = 6;
+  public formulaData = [
+    {name: 'D', description: 'діаметр прохідного січення труб ліфтової колони'},
+    {name: 'd', description: 'діаметр рухомого елемента'},
+    {name: 'ν', description: 'швидність підйома плунжера'},
+    {name: 'B', description: 'комплексний параметр газа'},
+    {name: 'm', description: 'маса плунжера'},
+    {name: 'ξ', description: 'коефіцієнт гідравлічного опору плунжера'},
+    {name: 'g', description: 'прискорення вільного падіння'},
+    {name: 'Q', description: 'дебіт газа в стандартних умовах'},
+    {name: 'ρc', description: 'плотність газу'},
+  ];
   public diameter = 310;
   public diameterMovableObject = 132;
-
+  public minSpeed = 0.1;
+  public maxSpeed = 6;
   public lineChartData = { data: [], label: 'Series A' };
   public lineChartLabels: Label[] = [].reverse();
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
@@ -56,7 +69,8 @@ export class PlungerWeightComponent implements OnInit {
 
 
   constructor(
-    private service: PlungerWeightService
+    private service: PlungerWeightService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -101,6 +115,19 @@ export class PlungerWeightComponent implements OnInit {
       this.lineChartData.data.push(m.toFixed(2));
       K1 += step;
     }
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(InfoModalComponent, {
+      width: '50vw',
+      data: {
+        title: 'Розділ для розрахунку маси плунжера',
+        img: 'pw.png',
+        formulaData: this.formulaData
+      }
+    });
+
+    dialogRef.afterClosed().subscribe();
   }
 
   // events

@@ -1,0 +1,19 @@
+button {
+  width: 200px;
+  height: 30px;
+  border-radius: 5px;
+  align-self: center;
+  &:focus {
+    outline: none;
+  }
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  align-self: center;
+}
+
